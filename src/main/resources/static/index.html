@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load & Booking Management System</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Load & Booking Management System</h1>
+
+        <!-- Loads Section -->
+        <section id="loads-section">
+            <h2>Loads</h2>
+            <button onclick="showLoadForm()">Create Load</button>
+            <form id="create-load-form" style="display: none;">
+                <h3>Create Load</h3>
+                <label>Shipper ID:</label>
+                <input type="text" id="shipperId" required><br>
+                <label>Loading Point:</label>
+                <input type="text" id="loadingPoint" required><br>
+                <label>Unloading Point:</label>
+                <input type="text" id="unloadingPoint" required><br>
+                <label>Loading Date:</label>
+                <input type="datetime-local" id="loadingDate" required><br>
+                <label>Unloading Date:</label>
+                <input type="datetime-local" id="unloadingDate" required><br>
+                <label>Product Type:</label>
+                <input type="text" id="productType" required><br>
+                <label>Truck Type:</label>
+                <input type="text" id="truckType" required><br>
+                <label>Number of Trucks:</label>
+                <input type="number" id="noOfTrucks" min="1" required><br>
+                <label>Weight:</label>
+                <input type="number" id="weight" step="0.1" min="0.1" required><br>
+                <label>Comment:</label>
+                <textarea id="comment"></textarea><br>
+                <button type="submit" onclick="createLoad(event)">Submit</button>
+                <button type="button" onclick="hideLoadForm()">Cancel</button>
+            </form>
+            <table id="loads-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Shipper ID</th>
+                        <th>Loading Point</th>
+                        <th>Unloading Point</th>
+                        <th>Product Type</th>
+                        <th>Truck Type</th>
+                        <th>No. of Trucks</th>
+                        <th>Weight</th>
+                        <th>Comment</th>
+                        <th>Status</th>
+                        <th>Date Posted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="loads-body"></tbody>
+            </table>
+        </section>
+
+        <!-- Bookings Section -->
+        <section id="bookings-section">
+            <h2>Bookings</h2>
+            <button onclick="showBookingForm()">Create Booking</button>
+            <form id="create-booking-form" style="display: none;">
+                <h3>Create Booking</h3>
+                <label>Load ID:</label>
+                <input type="text" id="loadId" required><br>
+                <label>Transporter ID:</label>
+                <input type="text" id="transporterId" required><br>
+                <label>Proposed Rate:</label>
+                <input type="number" id="proposedRate" step="0.01" min="0" required><br>
+                <label>Comment:</label>
+                <textarea id="commentBooking"></textarea><br>
+                <button type="submit" onclick="createBooking(event)">Submit</button>
+                <button type="button" onclick="hideBookingForm()">Cancel</button>
+            </form>
+            <table id="bookings-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Load ID</th>
+                        <th>Transporter ID</th>
+                        <th>Proposed Rate</th>
+                        <th>Comment</th>
+                        <th>Status</th>
+                        <th>Requested At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookings-body"></tbody>
+            </table>
+        </section>
+    </div>
+    <script src="/app.js"></script>
+</body>
+</html>
