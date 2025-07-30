@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.5.0</version>
+            <version>2.7.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -59,6 +59,10 @@
             <version>0.8.12</version>
             <scope>test</scope>
         </dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId> <!-- added for PagedModel -->
+        </dependency>
     </dependencies>
 
     <build>
@@ -70,7 +74,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version> <!-- Downgraded to 3.13.0 -->
+                <version>3.13.0</version> <!-- down to 3.13.0 -->
                 <configuration>
                     <source>21</source>
                     <target>21</target>

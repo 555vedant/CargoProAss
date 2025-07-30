@@ -3,7 +3,6 @@ package com.cargoai.assignment.cargoai_backend.service;
 import com.cargoai.assignment.cargoai_backend.dto.LoadDTO;
 import com.cargoai.assignment.cargoai_backend.entity.Load;
 import com.cargoai.assignment.cargoai_backend.repository.LoadRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,15 +17,14 @@ public class LoadService {
     @Autowired
     private LoadRepository loadRepository;
 
-    @Autowired
-    private EntityManager entityManager;
+ 
 
     @Transactional
     public LoadDTO createLoad(LoadDTO loadDTO) {
         Load load = toEntity(loadDTO);
-        load.setId(null); // Explicitly set ID to null for new entity
-        entityManager.clear(); // Clear EntityManager to avoid stale state
-        Load savedLoad = loadRepository.saveAndFlush(load); // Immediate flush
+        load.setId(null); // Ensure Hibernate treats it as a new entity
+
+        Load savedLoad = loadRepository.saveAndFlush(load); // Save and flush to DB immediately
         return toDTO(savedLoad);
     }
 

@@ -6,8 +6,11 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Data
 public class BookingDTO {
+    @JsonIgnore
     private UUID id;
 
     @NotNull(message = "Load ID must not be null")
