@@ -9,5 +9,5 @@ public class CargoAiAssignmentApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CargoAiAssignmentApplication.class, args);
 	}
-
+    
 }

@@ -1,5 +1,7 @@
 package com.cargoai.assignment.cargoai_backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -7,7 +9,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoadDTO {
+    @JsonIgnore // ignore id during deserialization
     private UUID id;
 
     @NotBlank(message = "Shipper ID must not be blank")
@@ -22,7 +26,7 @@ public class LoadDTO {
     @NotBlank(message = "Truck type must not be blank")
     private String truckType;
 
-    @Min(value = 1, message = "Number of trucks must be at least 1")
+    @Positive(message = "Number of trucks must be positive")
     private int noOfTrucks;
 
     @Positive(message = "Weight must be positive")
@@ -31,6 +35,7 @@ public class LoadDTO {
     private String comment;
 
     @NotNull(message = "Date posted must not be null")
+    @PastOrPresent(message = "Date posted must be in the past or present")
     private LocalDateTime datePosted;
 
     @NotNull(message = "Status must not be null")
@@ -38,6 +43,7 @@ public class LoadDTO {
     private String status;
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class FacilityDTO {
         @NotBlank(message = "Loading point must not be blank")
         private String loadingPoint;
@@ -50,7 +56,7 @@ public class LoadDTO {
         private LocalDateTime loadingDate;
 
         @NotNull(message = "Unloading date must not be null")
-        @Future(message = "Unloading date must be in the future")
+        @FutureOrPresent(message = "Unloading date must be in the present or future")
         private LocalDateTime unloadingDate;
     }
 }
