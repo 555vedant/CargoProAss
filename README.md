@@ -1,4 +1,4 @@
-# CargoAI Backend
+# Load and Booking System
 
 A Spring Boot backend for managing cargo loads and bookings, integrated with a PostgreSQL database and a simple HTML/JavaScript frontend. Provides RESTful APIs for CRUD operations on loads and bookings, with unit tests achieving >60% coverage.
 
