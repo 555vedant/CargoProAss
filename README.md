@@ -197,6 +197,4 @@ SELECT * FROM bookings;
 4. Push: `git push origin feature-name`
 5. Open a pull request
 
-## License
 
-MIT License
