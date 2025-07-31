@@ -78,13 +78,7 @@ Backend runs on `http://localhost:8080`.
 
 ### 4. Serve Frontend
 
-Use http-server for `index.html` and `script.js`:
-```bash
-npm install -g http-server
-http-server -p 8080
-```
-
-Access UI at `http://localhost:8080/index.html`.
+Access UI at `http://localhost:8080`.
 
 ## API Endpoints
 
