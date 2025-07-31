@@ -1,45 +1,53 @@
-CargoAI Backend
-This is the backend for the CargoAI application, a platform for managing cargo loads and bookings. Built with Spring Boot, it provides RESTful APIs to create, retrieve, update, and delete loads and bookings, integrated with a PostgreSQL database. The frontend is a simple HTML/JavaScript interface for interacting with these APIs. This project includes comprehensive unit tests for core services, achieving >60% coverage using JUnit 5 and Mockito.
-Features
+# CargoAI Backend
 
-Load Management: Create, delete, and list cargo loads with details like shipper ID, facility, product type, and status.
-Booking Management: Create, update, delete, and list bookings linked to loads via a @ManyToOne relationship.
-REST APIs: Exposed via /api/loads and /api/bookings, with pagination support.
-Frontend: Basic HTML/JavaScript UI to interact with the backend.
-Testing: Unit tests for LoadService and BookingService with >60% coverage.
-Error Handling: Custom ResourceNotFoundException for invalid load/booking IDs.
-Database: PostgreSQL with JPA/Hibernate for data persistence.
+A Spring Boot backend for managing cargo loads and bookings, integrated with a PostgreSQL database and a simple HTML/JavaScript frontend. Provides RESTful APIs for CRUD operations on loads and bookings, with unit tests achieving >60% coverage.
 
-Tech Stack
+## Features
 
-Backend: Spring Boot 3.x, Java 17, Maven
-Database: PostgreSQL
-Frontend: HTML, JavaScript (fetch API)
-Testing: JUnit 5, Mockito, JaCoCo
-Dependencies: Spring Data JPA, Spring Web, PostgreSQL Driver, OpenAPI (Swagger UI)
+- **Load Management**: Create, delete, and list loads (shipper ID, facility, product type, status)
+- **Booking Management**: Create, update, delete, and list bookings with a @ManyToOne relationship to loads
+- **REST APIs**: `/api/loads` and `/api/bookings` with pagination
+- **Frontend**: HTML/JavaScript UI using fetch API
+- **Testing**: JUnit 5 and Mockito tests for LoadService and BookingService
+- **Error Handling**: ResourceNotFoundException for invalid IDs
+- **Database**: PostgreSQL with JPA/Hibernate
 
-Prerequisites
+## Tech Stack
 
-Java 17 or higher
-Maven 3.6+
-PostgreSQL 13+ (with a database named cargoai)
-Node.js (optional, for serving frontend statically)
-Postman (optional, for API testing)
+- **Backend**: Spring Boot 3.x, Java 17, Maven
+- **Database**: PostgreSQL
+- **Frontend**: HTML, JavaScript
+- **Testing**: JUnit 5, Mockito, JaCoCo
+- **Dependencies**: Spring Data JPA, Spring Web, PostgreSQL Driver, OpenAPI (Swagger UI)
 
-Setup
+## Prerequisites
 
-Clone the Repository:
+- Java 17+
+- Maven 3.6+
+- PostgreSQL 13+ (database: cargoai)
+- Node.js (optional, for frontend)
+- Postman (optional, for API testing)
+
+## Setup
+
+### 1. Clone the Repository
+
+```bash
 git clone <repository-url>
 cd cargoai-backend
+```
 
+### 2. Configure PostgreSQL
 
-Configure PostgreSQL:
-
-Create a database named cargoai:psql -U postgres
+Create database:
+```sql
+psql -U postgres
 CREATE DATABASE cargoai;
+```
 
-
-Update src/main/resources/application.yml with your PostgreSQL credentials:spring:
+Update `src/main/resources/application.yml`:
+```yaml
+spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/cargoai
     username: postgres
@@ -52,39 +60,42 @@ Update src/main/resources/application.yml with your PostgreSQL credentials:sprin
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
         format_sql: true
+
 logging:
   level:
     org.hibernate.SQL: DEBUG
     com.cargoai.assignment: DEBUG
+```
 
+### 3. Build and Run
 
-
-
-Build the Project:
+```bash
 mvn clean install
-
-
-Run the Application:
 mvn spring-boot:run
+```
 
+Backend runs on `http://localhost:8080`.
 
-The backend runs on http://localhost:8080.
+### 4. Serve Frontend
 
-
-Serve the Frontend:
-
-Copy index.html and script.js to a static server (e.g., using http-server):npm install -g http-server
+Use http-server for `index.html` and `script.js`:
+```bash
+npm install -g http-server
 http-server -p 8080
+```
 
+Access UI at `http://localhost:8080/index.html`.
 
-Access the UI at http://localhost:8080/index.html.
+## API Endpoints
 
+### Loads
 
+#### POST /api/loads
+Create a load.
 
-API Endpoints
-Loads
-
-POST /api/loads: Create a new load.{
+**Request Body:**
+```json
+{
   "shipperId": "SHIP123",
   "facility": {
     "loadingPoint": "Delhi Warehouse",
@@ -100,14 +111,22 @@ POST /api/loads: Create a new load.{
   "datePosted": "2025-07-30T15:30:00",
   "status": "POSTED"
 }
+```
 
+#### GET /api/loads?page=0&size=10
+List loads (paginated).
 
-GET /api/loads?page=0&size=10: List loads (paginated).
-DELETE /api/loads/{id}: Delete a load by UUID.
+#### DELETE /api/loads/{id}
+Delete a load.
 
-Bookings
+### Bookings
 
-POST /api/bookings: Create a new booking (requires a valid loadId).{
+#### POST /api/bookings
+Create a booking (requires valid loadId).
+
+**Request Body:**
+```json
+{
   "loadId": "123e4567-e89b-12d3-a456-426614174000",
   "transporterId": "TRANS123",
   "proposedRate": 1000.50,
@@ -115,77 +134,75 @@ POST /api/bookings: Create a new booking (requires a valid loadId).{
   "status": "PENDING",
   "requestedAt": "2025-07-30T15:30:00"
 }
+```
 
+#### GET /api/bookings?page=0&size=10
+List bookings.
 
-GET /api/bookings?page=0&size=10: List bookings (paginated).
-PUT /api/bookings/{id}: Update a booking by UUID.
-DELETE /api/bookings/{id}: Delete a booking by UUID.
-GET /api/bookings/{id}: Get a booking by UUID.
+#### PUT /api/bookings/{id}
+Update a booking.
 
-Testing
-The project includes unit tests for LoadService and BookingService, covering >60% of the code using JUnit 5 and Mockito.
+#### DELETE /api/bookings/{id}
+Delete a booking.
 
-Run Tests:
+#### GET /api/bookings/{id}
+Get a booking.
+
+## Testing
+
+Unit tests cover LoadService and BookingService (>60% coverage).
+
+### Run Tests
+```bash
 mvn clean test
+```
 
-
-Check Coverage:
+### Check Coverage
+```bash
 mvn jacoco:report
+```
 
+View report: `target/site/jacoco/index.html`.
 
-Open target/site/jacoco/index.html to view coverage (>60% for LoadService and BookingService).
+**Test Files:**
+- `src/test/java/com/cargoai/assignment/cargoai_backend/service/LoadServiceTest.java`
+- `src/test/java/com/cargoai/assignment/cargoai_backend/service/BookingServiceTest.java`
 
+## Database
 
-Test Files:
+Hibernate auto-generates the schema (`ddl-auto: update`).
 
-src/test/java/com/cargoai/assignment/cargoai_backend/service/LoadServiceTest.java
-src/test/java/com/cargoai/assignment/cargoai_backend/service/BookingServiceTest.java
-
-
-
-Database
-The database schema is auto-generated by Hibernate (ddl-auto: update). Key tables:
-
-loads: Stores load details (id, shipper_id, facility, product_type, etc.).
-bookings: Stores booking details (id, load_id, transporter_id, proposed_rate, etc.), with a foreign key to loads.
+**Tables**: `loads`, `bookings` (with `load_id` foreign key).
 
 Verify data:
+```sql
 psql -U postgres -d cargoai
 SELECT * FROM loads;
 SELECT * FROM bookings;
+```
 
-Troubleshooting
+## Troubleshooting
 
-API Errors:
-If POST /api/bookings fails with ResourceNotFoundException, ensure the loadId exists in the loads table.
-Check logs: tail -f target/spring-boot.log.
+- **API Errors**: If `POST /api/bookings` fails with ResourceNotFoundException, verify `loadId` exists in loads
+- **Test Failures**: Ensure BookingService and LoadService match provided code
+- **Frontend Issues**: Check `script.js` for `data.content` handling; use browser console (F12)
+- **Logs**: `tail -f target/spring-boot.log`
 
+## Resolved Issues
 
-Test Failures:
-Ensure BookingService and LoadService match the provided implementations.
-Verify Booking and Load entities have the correct @ManyToOne and enum definitions.
+- Fixed ObjectOptimisticLockingFailureException in LoadService
+- Resolved Swagger UI issues with PagedModel
+- Fixed undefined UUID errors in script.js
+- Fixed BookingServiceTest NullPointerException with proper mock initialization
 
+## Contributing
 
-Frontend Issues:
-If the UI shows undefined errors, check script.js for proper response handling (data.content).
-Inspect browser console (F12) for API response details.
+1. Fork the repository
+2. Create a branch: `git checkout -b feature-name`
+3. Commit: `git commit -m "Add feature"`
+4. Push: `git push origin feature-name`
+5. Open a pull request
 
+## License
 
-
-Known Issues (Resolved)
-
-Fixed ObjectOptimisticLockingFailureException by using saveAndFlush in LoadService.
-Fixed Swagger UI issues with PagedModel for pagination.
-Fixed undefined UUID errors in frontend by validating id in script.js.
-Fixed BookingServiceTest failures (NullPointerException) by ensuring proper mock initialization.
-
-Contributing
-
-Fork the repository.
-Create a feature branch: git checkout -b feature-name.
-Commit changes: git commit -m "Add feature".
-Push to the branch: git push origin feature-name.
-Open a pull request.
-
-License
-This project is licensed under the MIT License.
+MIT License
