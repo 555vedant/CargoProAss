@@ -182,19 +182,6 @@ SELECT * FROM bookings;
 - **Frontend Issues**: Check `script.js` for `data.content` handling; use browser console (F12)
 - **Logs**: `tail -f target/spring-boot.log`
 
-## Resolved Issues
 
-- Fixed ObjectOptimisticLockingFailureException in LoadService
-- Resolved Swagger UI issues with PagedModel
-- Fixed undefined UUID errors in script.js
-- Fixed BookingServiceTest NullPointerException with proper mock initialization
-
-## Contributing
-
-1. Fork the repository
-2. Create a branch: `git checkout -b feature-name`
-3. Commit: `git commit -m "Add feature"`
-4. Push: `git push origin feature-name`
-5. Open a pull request
 
 
