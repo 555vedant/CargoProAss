@@ -8,7 +8,6 @@ async function fetchLoads() {
     loads.forEach((load) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-                <td>${load.id}</td>
                 <td>${load.shipperId}</td>
                 <td>${load.facility.loadingPoint}</td>
                 <td>${load.facility.unloadingPoint}</td>
@@ -40,7 +39,6 @@ async function fetchBookings() {
     bookings.forEach((booking) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-                <td>${booking.id}</td>
                 <td>${booking.loadId}</td>
                 <td>${booking.transporterId}</td>
                 <td>${booking.proposedRate}</td>
