@@ -2,6 +2,7 @@ package com.cargoai.assignment.cargoai_backend.service;
 
 import com.cargoai.assignment.cargoai_backend.dto.LoadDTO;
 import com.cargoai.assignment.cargoai_backend.entity.Load;
+import com.cargoai.assignment.cargoai_backend.exception.ResourceNotFoundException;
 import com.cargoai.assignment.cargoai_backend.repository.LoadRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,16 @@ public class LoadService {
     @Transactional
     public LoadDTO createLoad(LoadDTO loadDTO) {
         Load load = toEntity(loadDTO);
-        load.setId(null); // Ensure Hibernate treats it as a new entity
+        load.setId(null); 
 
-        Load savedLoad = loadRepository.saveAndFlush(load); // Save and flush to DB immediately
+        Load savedLoad = loadRepository.saveAndFlush(load); // save and flush to DB immediately
         return toDTO(savedLoad);
     }
 
     @Transactional
     public LoadDTO updateLoad(UUID id, LoadDTO loadDTO) {
         Load existingLoad = loadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Load not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Load not found with id: " + id));
         updateEntity(existingLoad, loadDTO);
         Load updatedLoad = loadRepository.save(existingLoad);
         return toDTO(updatedLoad);
@@ -40,14 +41,14 @@ public class LoadService {
     @Transactional
     public void deleteLoad(UUID id) {
         if (!loadRepository.existsById(id)) {
-            throw new RuntimeException("Load not found with id: " + id);
+            throw new ResourceNotFoundException("Load not found with id: " + id);
         }
         loadRepository.deleteById(id);
     }
 
     public LoadDTO getLoad(UUID id) {
         Load load = loadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Load not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Load not found with id: " + id));
         return toDTO(load);
     }
 
